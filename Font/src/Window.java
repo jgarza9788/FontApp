@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +27,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.ScrollPaneLayout;
 import java.awt.FontMetrics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 
@@ -33,7 +37,7 @@ public class Window
 
 //	private static final int String = 0;
 
-	public static JFrame ThisWindow = new JFrame("Font-ier");
+	public static JFrame ThisWindow = new JFrame("FontApp");
 	
 	public JPanel Content = new JPanel();
 	public JScrollPane ScrollPane = new JScrollPane(Content);
@@ -78,7 +82,8 @@ public class Window
 		
 		CollectContent();
 		AddContent();
-				
+		
+		PleaseWait.setVisible(false);
 		ThisWindow.setVisible(true);
 		ThisWindow.repaint();
 		
@@ -135,6 +140,7 @@ public class Window
 	public void AddContent()
 	{
 		int y = 1;
+		String FontPath = null;
 
 		for (String F : AllFontNames)
 		{
@@ -144,10 +150,13 @@ public class Window
 				if(F.equals(P.replace("/Volumes/Macintosh HD/Library/Fonts/", "")) || F.equals(P.replace(System.getProperty("user.home") + "/Library/Fonts/", "")))
 				{
 					ThisFontPath = new File(P);
+					FontPath = P;
 					System.out.println(F + " :: " + P);
 					break;
 				}
 			}
+			
+			System.out.println("Path For Button!: " + FontPath);
 			
 			try 
 			{
@@ -199,16 +208,42 @@ public class Window
 	        	GBC.weighty = 0.5;
 	        	GBC.gridx = 0;
 	        	GBC.gridy = y;
-//	        	GBC.gridwidth = 500
+	        	GBC.gridwidth = 10;
 	        	GBC.insets = new Insets(5,10,0,10);
 	        	
 	        	Content.add(FontLabel,GBC);
 	        	
+	        	
 	        	y = y + 1;
+	        	GBC.gridx = 0;
 	        	GBC.gridy = y;
 	        	GBC.insets = new Insets(0,10,5,10);
 	        	
 	        	Content.add(SampleLabel,GBC);
+	        	
+	        	GBC.fill = GridBagConstraints.NONE;
+				GBC.weightx = 0;
+	        	GBC.weighty = 0.5;
+	        	y = y + 1;
+	        	GBC.gridy = y;
+	        	GBC.anchor = GridBagConstraints.NORTHWEST;
+	        	GBC.insets = new Insets(0,0,0,0);
+	        	
+	        	final String FinalFontPath = FontPath;
+	        	
+	        	JButton OIF = new JButton("Open In Finder");
+	        	Content.add(OIF,GBC);
+	        	OIF.addActionListener(
+	        			new ActionListener( ) 
+	        			{
+							@Override
+							public void actionPerformed(ActionEvent e) 
+							{
+								ButtonActions.OpenInFinder(FinalFontPath);
+								System.out.println(FinalFontPath);
+							}
+	        			}
+	        			);
 	        	
 	        	y = y + 1;
 	        	GBC.gridy = y;
