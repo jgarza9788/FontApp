@@ -32,8 +32,7 @@ public class ButtonActions {
         ScriptEngineManager mgr = new ScriptEngineManager();        
         ScriptEngine engine = mgr.getEngineByName("AppleScript");
         engine.eval("property the_path : \"" + PI + "\" \n set the_folder to (POSIX file the_path) as alias \n tell application \"Finder\" \n activate \n reveal the_folder \n end tell");
-//        engine.eval( "tell application \"Finder\" \n set commento to \""+Comment+"\" \n set TheFile to \""+MACpath+FileName+"\" \n set comment of (TheFile as alias) to commento \n end tell" );
-        
+
     	}
     	catch(Exception e)
     	{
@@ -41,13 +40,6 @@ public class ButtonActions {
     	}
 
 	}
-	
-//	public static final ActionListener OIF = new ActionListener() 
-//	{
-//		public void actionPerformed(ActionEvent arg0)
-//		{
-//			OpenInFinder();
-//		}
-//	};
+
 
 }
